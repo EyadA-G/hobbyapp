@@ -1,0 +1,65 @@
+.name{
+    font-weight: bolder;
+    font-size: 30px;
+    margin-left: 20px;
+}
+.img{
+    position: fixed;
+    padding-top: 2px;
+    margin-left: 12%;
+    margin-top: 10px;
+    top: 0%;
+    border-radius: 50%;
+}
+div.title{
+    padding: 35px 0px 30px 1px;
+    background-color: antiquewhite;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    font-size: large;
+}
+a.logout{
+    background-color: rgb(199, 180, 218);
+    color: black;
+    border-radius: 10%;
+    padding: 5px 10px 5px 10px;
+    position: fixed;
+    margin-left: 93%;
+    margin-top: 20px;
+    top: 2%;
+
+}
+
+p.course{
+    font-weight: bold;
+    font-size: 30px;
+    /* margin: 0px 0px 0px 0px;
+    padding: 1px 1px 1px 1px; */
+    /* position: fixed;  */ 
+    /* margin-right: 20%;  */
+    margin-left:40%;
+    margin-top: -3%;
+}
+h3.modules{
+    font-size: larger;
+    background-color: rgb(230, 173, 230);
+    font-weight: 400px;
+    font-size: 20px;
+    margin: 50px 10px 10px 10px;
+    padding: 2px 16px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 5px;
+}
+
+.course-name{
+    background-color: blueviolet;
+    font-weight: 400px;
+    font-size: 20px;
+    margin: 20px 0px 10px 0px;
+    padding: 2px 16px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 5px;
+}

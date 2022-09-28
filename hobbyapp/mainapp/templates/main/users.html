@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Hello {{username}}{% endblock %}
+
+{% block content %}
+<div class='title'>
+    <p class='name' id="username">{{username}}</p>
+    <span><a class="logout" href="{% url 'logout' %}">logout</a></span>
+</div>
+<img class="img" src="{{ usern.photo.url }}" width=100 height=100>
+<h3 class='modules'>Hobbies:</h3>
+<ul>
+    {% for hobbies in usern.hobbies.all %}
+        <li class="course-name">{{hobbies}}</li>
+    {% endfor %}
+</ul>
+
+<button><a href="{% url 'hobbies' %}">View Hobbies</a></button>
+<div id="app">
+    <div>
+        <form method="POST" id="hobby-form">
+            {% csrf_token %}
+            <label for="hobby_name">Add name:</label><br>
+            <input v-model="hobbyName" type="text" id="hobby_name" name="hobby_name" ref="hobby_name"><br>
+            <button  @click="addHobby()" type="submit" class="btn btn-primary">
+                            Add
+            </button>
+        </form>
+    </div>    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+        let app = Vue.createApp({
+       delimiters: ["((", "))"],
+        data() {
+                return{
+                     hobbyname:[],
+                }
+            },
+        methods:{
+            async addHobby() {
+                var hobby_name = this.$refs.hobby_name.value
+                console.log(hobby_name) 
+                if (confirm(`Are you sure you want to add ${hobby_name}?`)) {
+                    let response = await fetch("{% url 'add_hobby' %}",{
+                        method: "POST",
+                        headers: {
+                                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken").value,
+                            },
+                        body:  JSON.stringify({ 'name': this.hobbyName })
+                    }); 
+                    if (response.ok) {  
+                        let data = await response.json()
+                        alert(`${hobby_name} created`)
+                        this.hobby_name.push(data.DOC)
+                    }
+                        else {
+                            alert("Failed to add hobby");
+                        }
+                }
+            },
+        }
+        })
+        app.mount('#app')
+</script>
+{% endblock %}
+
+
+

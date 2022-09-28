@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Hobbies{% endblock %}
+
+{% block content %}
+<div class='title'>
+    <p class='name'> Hobbies</p>
+</div>
+<h3>User: {{user}}<h3>
+<div id='app'>
+    <p>List of users and their hobbies: </p>
+    <!--Prints all hobbies from the Hobby model-->
+   <ul>
+        <div v-for="item in user">
+            <div v-for="i in item.hobbies">
+                <ul v-if="i == hobbies ">
+                    <li>((item.name)) - ((i))</li>   
+                </ul>
+            </div>
+        </div>
+
+    </ul>
+    <form>
+        <label for="hobby">Filter by hobby: </label>
+        <input ref="hobby" type="search" placeholder="Search by hobbies..." />
+        <button @click="search()" type="button" class="btn btn-primary">
+                    search
+        </button>
+    </form>
+    <br>
+    <p>List of hobbies: </p>
+    <ul>
+        <div v-for="(hobby, index) in hobby_list">
+            <ul>
+                <li>((hobby.name))</li>   
+            </ul>
+        </div>
+    </ul>
+
+
+</div>
+<span><a class="logout" href="{% url 'logout' %}">logout</a></span>
+<button><a href="{% url 'users' %}">Go back</a></button>
+{% endblock %}
+
+{% block scripts %}
+<script>
+        let app = Vue.createApp({
+       delimiters: ["((", "))"],
+        data() {
+                return {
+
+                    user: [],
+                    hobbies: [],
+                    hobby_list: [],
+                    
+                }
+            },
+        
+        async created() {
+            let response = await fetch("{% url 'user_api' %}");
+            let resp = await fetch("{% url 'hobby_api' %}");
+            if (response.ok) {
+                let data = await response.json();
+                let hobby_data = await resp.json();
+                this.user = data.user[0];
+                this.hobby_list = hobby_data.hobby;
+            }
+            else {
+                alert("Failed to load list of hobbies");
+            }
+            
+            
+            
+        },
+        methods: {
+
+            async search() {
+                let hobby = this.$refs.hobby.value
+                let search = ''
+                let response = await fetch("{% url 'hobby_api' %}");
+                if (response.ok) {
+                    let data = await response.json();
+                    for(let i = 0; i < data.hobby.length; i++){
+                        if (data.hobby[i].name == hobby){
+                            search = data.hobby[i].name;
+                            }
+                    }
+                    this.hobbies = search
+                
+                }
+                else {
+                    alert("Failed to load list of countries");
+                }
+            }}
+        })
+        app.mount('#app')
+</script>
+{% endblock %}

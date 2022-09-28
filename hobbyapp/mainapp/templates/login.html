@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block static %}
+  <link rel='stylesheet' type='text/css' href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<div 
+    class="card" style="width: 18rem;  position: fixed; right: 50%; left:40%; top: 30%;">
+  <div class="card-body">
+    <form method="POST" action="">
+    {%csrf_token%}
+        <h5 class="card-title">Login</h5>
+        <input class="card-text" type="text" name="username" placeholder="Username..">
+        <input class="card-text" type="password" name="password" placeholder="Password..">
+        {% if messages%}   
+            {%for messages in messages%}     
+                <p style="color: red; font-weight: bold;">{{messages}}</p>
+            {% endfor %}
+        {% endif %}
+        <div><input class="card-link" type="submit" value="Login"></div> 
+    </form>
+  </div>
+</div>
+{% endblock %}
